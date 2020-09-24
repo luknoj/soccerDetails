@@ -6,7 +6,6 @@ const NewPitch = ({ details, teamDetails }) => {
   const [showPassesSection, setPassesSection] = useState(false);
   const [selectedTeam, setSelectedTeam] =  useState('all');
   const [isSectionShowed, setShowedSection] = useState({ goals: false, shoots: false, passes: false })
-  // const [ details]
   const canvas = useRef(null);
   const scale = 8;
   const canvasWidth = 105 * scale;
@@ -21,7 +20,6 @@ const NewPitch = ({ details, teamDetails }) => {
   const draw = () => {
     for(let i = 0; i < sections.rows; i++) {
       for(let j = 0; j < sections.columns; j++) {
-        // drawFillRect(i * tileWidth, j * tileHeight, i*j)
         rectangles.push({ x: i * tileWidth, y: j * tileHeight })
       }
     }
@@ -30,7 +28,6 @@ const NewPitch = ({ details, teamDetails }) => {
   useEffect(() => {
     const canvasElement = canvas.current
     ctx = canvasElement.getContext("2d"); 
-
     draw()
   }, [draw])
 
@@ -41,11 +38,8 @@ const NewPitch = ({ details, teamDetails }) => {
   
 
   const drawFillRect = (x, y, opacity) => {
-    const backgroundColor = 'black';
-
     ctx.beginPath();
     ctx.fillStyle = `rgba(0, 0, 0, .05)`;
-    // ctx.fillStyle = 'blue';
     ctx.strokeStyle = 'black';
     ctx.rect(x, y, tileWidth, tileHeight);
     ctx.fill()
@@ -212,7 +206,6 @@ const NewPitch = ({ details, teamDetails }) => {
           const y = detail.position_y * canvasHeight
           ctx.beginPath();
           ctx.arc(x, y, 5, 0, 2 * Math.PI, true);
-          console.log(detail.team, details.away_team);
           ctx.fillStyle = Number(detail.team) === Number(details.away_team) ? 'purple' : 'black';
           ctx.fill();
         })
@@ -220,16 +213,6 @@ const NewPitch = ({ details, teamDetails }) => {
     }
 
     setShowedSection(prevState => ({ goals: false, shoots: false, passes: !prevState.passes }))
-  }
-
-  const handleSelectedPlayer = (id) => {
-    if(isSectionShowed.goals) {
-      handleGoalsPercente(Number(id))
-    } else if (isSectionShowed.passes) {
-      handlePassesPercente(Number(id))
-    } else if (isSectionShowed.shoots) {
-      handleShotsPercente(Number(id))
-    }
   }
 
   return (
@@ -255,7 +238,8 @@ const NewPitch = ({ details, teamDetails }) => {
       </h1>
       <div className="pitch">
         <div className="team-container">
-          <h1 style={{ display: "flex" }}>{details.home_team_name}
+          .team-heading
+          <h1 >{details.home_team_name}
           <div className="home-team"></div></h1>
           
           <table>
@@ -271,7 +255,6 @@ const NewPitch = ({ details, teamDetails }) => {
               <tr 
                 className="table_player"
                 key={player.id}
-                // onClick={() => handleSelectedPlayer(player.id)}
               >
                 <td>{player.first_name} {player.last_name}</td>
                 <td className="table_shoots-cell">{player.shots_count}</td>
@@ -282,7 +265,6 @@ const NewPitch = ({ details, teamDetails }) => {
         </div>
           <canvas
             onClick={handleMouseClick}
-            // onMouseMove={handleMouseMove}
             ref={canvas}
             id="pitch"
             width={canvasWidth}
@@ -290,8 +272,7 @@ const NewPitch = ({ details, teamDetails }) => {
           >
           </canvas>
         <div className="team-container">
-
-          <h1 style={{ display: "flex" }}>{details.away_team_name}
+          <h1 >{details.away_team_name}
           <div className="away-team"></div></h1>
           
           <table>
@@ -307,7 +288,6 @@ const NewPitch = ({ details, teamDetails }) => {
               <tr 
                 className="table_player"
                 key={player.id}
-                // onClick={() => handleSelectedPlayer(player.id)}
               >
                 <td>{player.first_name} {player.last_name}</td>
                 <td className="table_shoots-cell">{player.shots_count}</td>

@@ -47,7 +47,6 @@ function App() {
     fetchMatches();
   }, [])
 
-  console.log('teamDetails', teamDetails);
   return (
     <div className="container">
       <h1>
